@@ -1,17 +1,17 @@
 <script setup>
 import { ref } from "vue";
-import socksGreenImage from './assets/images/socks_green.jpeg'
-
-const useChangeWithDelay = (state, newVal, delay) => {
-  setTimeout(() => {
-    state.value = newVal;
-  }, delay);
-};
+import socksGreenImage from "./assets/images/socks_green.jpeg";
 
 const product = ref("Socks");
-const image = ref(socksGreenImage)
+const image = ref(socksGreenImage);
+const inStock = ref(true);
 
-useChangeWithDelay(product, "New Socks", 1000);
+const details = ref(["50% cottont", "30% woll", "20% polyester"]);
+
+const variants = ref([
+  { id: 2234, color: "green" },
+  { id: 2235, color: "blue" },
+]);
 </script>
 
 <template>
@@ -19,12 +19,15 @@ useChangeWithDelay(product, "New Socks", 1000);
   <div class="product-display">
     <div class="product-container">
       <div class="product-image">
-        <img v-bind:src="image">
+        <img v-bind:src="image" />
       </div>
       <div class="product-info">
         <h1>{{ product }}</h1>
-        <p>In Stock</p>
-        <p>Out of Stock</p>
+        <p v-if="inStock">In Stock</p>
+        <p v-else>Out of Stock</p>
+        <ul>
+          <li v-for="detail in details">{{ detail }}</li>
+        </ul>
       </div>
     </div>
   </div>
